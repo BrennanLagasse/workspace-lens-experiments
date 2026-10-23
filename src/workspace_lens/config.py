@@ -1,7 +1,14 @@
 import os
 from dataclasses import asdict, dataclass, replace
-from datetime import UTC, datetime
 from typing import Any, Literal, Optional
+from datetime import datetime
+
+# Python 3.10 compatibility (for local hardware)
+try:
+    from datetime import UTC
+except ImportError:
+    from datetime import timezone
+    UTC = timezone.utc
 
 from workspace_lens.lrp import LRP_MODES
 

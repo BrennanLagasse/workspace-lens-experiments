@@ -45,8 +45,15 @@ import logging
 import os
 import subprocess
 from collections.abc import Sequence
-from datetime import UTC, datetime
+from datetime import datetime
 from pathlib import Path
+
+# Python 3.10 compatibility (for local hardware)
+try:
+    from datetime import UTC
+except ImportError:
+    from datetime import timezone
+    UTC = timezone.utc
 
 import pandas as pd
 import torch as t

@@ -31,7 +31,13 @@ import os
 import time
 from collections.abc import Callable, Iterator
 from pathlib import Path
-from typing import Any, Optional, Self
+from typing import Any, Optional
+
+# Python 3.10 compatibility (for local hardware)
+try:
+    from typing import Self
+except:
+    from typing_extensions import Self
 
 import torch as t
 

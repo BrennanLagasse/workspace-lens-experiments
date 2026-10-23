@@ -1,8 +1,15 @@
 """``LensConfig.from_dict``: round trips, and the config saved in the released lens."""
 
 import re
-from datetime import UTC, datetime
+from datetime import datetime
 from pathlib import Path
+
+# Python 3.10 compatibility (for local hardware)
+try:
+    from datetime import UTC
+except ImportError:
+    from datetime import timezone
+    UTC = timezone.utc
 
 from workspace_lens.config import TIMESTAMP_FORMAT, LensConfig
 
