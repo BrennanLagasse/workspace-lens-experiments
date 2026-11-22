@@ -8,3 +8,5 @@ __pycache__/
 artifacts/
 results/
 .github/workflows/tests.yml
+lens-params/
+notes/

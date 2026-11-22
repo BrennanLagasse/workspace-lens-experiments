@@ -61,6 +61,8 @@ from workspace_lens.utils import (
     vocab_size_of,
 )
 
+from tqdm import tqdm
+
 logger = logging.getLogger(__name__)
 
 
@@ -343,7 +345,7 @@ class ReadoutEvalRunner:
         column holding True/False, or ``NA`` for ungradeable evals.
         """
         rows: list[dict] = []
-        for item in items:
+        for item in tqdm(items):
             target = item.correctness_target()
             if target is None:
                 correct: Any = pd.NA
@@ -381,7 +383,7 @@ class ReadoutEvalRunner:
                 "n_candidates",
             )
         }
-        for item_idx, item in enumerate(items):
+        for item_idx, item in tqdm(enumerate(items)):
             item_readout = _item_readout_and_candidates(self.model, item, self.max_seq_len)
             item_dropped_intermediates = (
                 item.intermediates
@@ -424,8 +426,8 @@ class ReadoutEvalRunner:
                             min_rank_over_candidates(logits_V, candidate_ids)
                         )
                         column_values["n_candidates"].append(len(candidate_ids))
-            if (item_idx + 1) % 25 == 0 or item_idx + 1 == len(items):
-                logger.info("scored item %d/%d", item_idx + 1, len(items))
+            # if (item_idx + 1) % 25 == 0 or item_idx + 1 == len(items):
+            #     logger.info("scored item %d/%d", item_idx + 1, len(items))
         return pd.DataFrame(column_values)
 
     @t.no_grad()
